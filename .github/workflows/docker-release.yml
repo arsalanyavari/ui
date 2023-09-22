@@ -11,9 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        versions:
-          - latest
-          - ${{ github.ref_name }}
         apps:
           - watcher
           - guard
@@ -42,13 +39,20 @@ jobs:
           username: arsalanyavari
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Docker Metadata action
+        uses: docker/metadata-action@v3.5.0
+        id: meta
+        with:
+          images: arsalanyavari/ui-${{ matrix.apps }}
+
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
           context: .
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ghcr.io/arsalanyavari/ui-${{ matrix.apps }}:${{ matrix.versions }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
           target: ${{ matrix.apps }}
 
 #           platforms: linux/amd64,linux/arm64,linux/arm/v7
