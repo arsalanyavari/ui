@@ -26,6 +26,12 @@ jobs:
           mv docker/nginx.conf ./
           mv docker/entrypoint.sh ./
 
+      - name: setup arm
+        uses: uraimo/run-on-arch-action@v2
+        with:
+          arch: armv7
+          distro: ubuntu18.04
+      
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
 
@@ -46,10 +52,6 @@ jobs:
           images: ghcr.io/arsalanyavari/ui-${{ matrix.apps }}
 
       - name: Build and push
-      - uses: uraimo/run-on-arch-action@v2
-        with:
-          arch: armv7
-          distro: ubuntu18.04
       - uses: docker/build-push-action@v4
         with:
           context: .
