@@ -40,10 +40,10 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Docker Metadata action
-        uses: docker/metadata-action@v3.5.0
+        uses: docker/metadata-action@v5
         id: meta
         with:
-          images: arsalanyavari/ui-${{ matrix.apps }}
+          images: ghcr.io/arsalanyavari/ui-${{ matrix.apps }}
 
       - name: Build and push
         uses: docker/build-push-action@v4
