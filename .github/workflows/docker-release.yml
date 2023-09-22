@@ -51,7 +51,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          platforms: linux/arm64,linux/arm/v7
+          platforms: linux/arm64
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           target: ${{ matrix.apps }}
