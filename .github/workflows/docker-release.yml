@@ -30,7 +30,7 @@ jobs:
         uses: docker/setup-qemu-action@v2
         with:
           # set PLATFORM_LIST as list of platform names separate with comma eg. linux/amd64,linux/arm64,linux/arm/v7
-          platforms: ${{ vars.PLATFORM_LIST || linux/amd64 }}
+          platforms: ${{ vars.PLATFORM_LIST || 'linux/amd64' }}
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
@@ -52,7 +52,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          platforms: ${{ vars.PLATFORM_LIST || linux/amd64 }}
+          platforms: ${{ vars.PLATFORM_LIST || 'linux/amd64' }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           target: ${{ matrix.apps }}
